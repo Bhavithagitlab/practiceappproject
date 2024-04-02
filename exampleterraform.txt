@@ -1,0 +1,50 @@
+
+provider "aws" {
+  region = "your_region"
+}
+
+resource "aws_vpc" "main" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_support = true
+  enable_dns_hostnames = true
+}
+
+resource "aws_subnet" "main" {
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.1.0/24"
+  availability_zone       = "your_az"
+  map_public_ip_on_launch = true
+}
+
+resource "aws_instance" "example" {
+  ami           = "your_ami_id"
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.main.id
+
+  root_block_device {
+    volume_size = 30
+    volume_type = "gp2"
+  }
+
+  ebs_block_device {
+    device_name = "/dev/sdf"
+    volume_type = "gp2"
+    volume_size = 20
+  }
+
+  ebs_block_device {
+    device_name = "/dev/sdg"
+    volume_type = "gp2"
+    volume_size = 10
+  }
+
+  ebs_block_device {
+    device_name = "/dev/sdh"
+    volume_type = "gp2"
+    volume_size = 10
+  }
+
+  tags = {
+    Name = "example-instance"
+  }
+}
