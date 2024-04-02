@@ -1,6 +1,6 @@
 
 provider "aws" {
-  region = "your_region"
+  region = "ap-south-1"
 }
 
 resource "aws_vpc" "main" {
