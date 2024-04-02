@@ -1,6 +1,6 @@
 
 provider "aws" {
-  region = "your_region"
+  region = "us -east-2"
 }
 
 resource "aws_vpc" "main" {
@@ -18,7 +18,7 @@ resource "aws_subnet" "main" {
 
 resource "aws_instance" "example" {
   ami           = "your_ami_id"
-  instance_type = "t2.micro"
+  instance_type = "t2.large"
   subnet_id     = aws_subnet.main.id
 
   root_block_device {
